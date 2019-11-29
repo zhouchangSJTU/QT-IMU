@@ -6,6 +6,8 @@
 #include<QList>
 #include<QString>
 #include<QDebug>
+#include<QThread>
+#include"IMUSerial.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -16,13 +18,25 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
+    CJY901 imu;
+    QThread *imuThuread;
+//    QTimer *timer;
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-    CJY901 imu;
 private:
     Ui::MainWindow *ui;
+    IMUSerial *serial;
+    QList<QString> detectSerial();
+    void openPort(QString portName);
+    void readData();
 
 public slots:
+
     void on_detectSerial_clicked();
+    void on_link_clicked();
+    void on_recieve_clicked();
+    void on_stopButton_clicked();
+    void onReadyRead();
+    void onGetIMU(QString data);
 };
 #endif // MAINWINDOW_H

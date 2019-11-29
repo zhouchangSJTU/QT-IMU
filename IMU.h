@@ -157,6 +157,7 @@ public:
     ~CJY901();
     void CopeSerialData(std::string ucData,unsigned short usLength);
     void openPort(QString portName);
+    QString recieveData();
     QList<QString> getSerialList();
 };
 

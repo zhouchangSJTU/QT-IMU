@@ -18,11 +18,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     IMU.cpp \
+    IMUSerial.cpp \
     main.cpp \
     mainwindow.cpp
 
 HEADERS += \
     IMU.h \
+    IMUSerial.h \
     mainwindow.h
 
 FORMS += \

@@ -41,12 +41,29 @@ void CJY901::openPort(QString portName){
     if(!serialIMU->open(QIODevice::ReadWrite))
     {
         qDebug()<<portName<<"打开失败!";
+        qDebug()<<"serial state is :";
+        qDebug()<<serialIMU->isOpen();
         return;
     }
-    serialIMU->setBaudRate(QSerialPort::Baud115200,QSerialPort::AllDirections);
-
+    serialIMU->setBaudRate(QSerialPort::Baud9600,QSerialPort::AllDirections);
+    qDebug()<<"success";
+    qDebug()<<"serial state is :";
+    qDebug()<<serialIMU->isOpen();
 }
 
+QString CJY901::recieveData(){
+    if(!serialIMU->isOpen())
+    {
+        qDebug()<<"port is not open";
+        return "error, port is not opem";
+    }
+    else
+    {
+        QByteArray data = serialIMU->readAll();
+        QString dataStr = QString::fromStdString(data.toStdString());
+        return dataStr;
+    }
+}
 //convert serial data to jy901 data
 void CJY901::CopeSerialData(std::string str_in, unsigned short usLength)
 {
