@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#define debugMode 0
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -12,7 +13,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->recieve,SIGNAL(clicked()), serial, SLOT(onReicieve()));
     connect(ui->stopButton,SIGNAL(clicked()), serial, SLOT(onStop()));
     connect(serial,SIGNAL(readyRead()),this,SLOT(onReadyRead()));
-    connect(serial,SIGNAL(send(QString)),this,SLOT(onGetIMU(QString)));
+    connect(serial,SIGNAL(send(QByteArray)),this,SLOT(onGetIMU(QByteArray)));
     imuThuread->start();
 //    connect(&btn,SIGNAL(clicked()),this,SLOT(sendSerialData()));
 }
@@ -43,11 +44,9 @@ void MainWindow::on_detectSerial_clicked()
 }
 
 void MainWindow::on_link_clicked(){
-    qDebug()<<"debug link";
     serial->openPort(ui->comboBox->currentText());
         qDebug()<<ui->comboBox->currentText();
     ui->textBrowser->append("select: " + ui->comboBox->currentText());
-//    openPort("COM8");
 }
 
 void MainWindow::on_recieve_clicked(){
@@ -68,8 +67,10 @@ QList<QString> MainWindow::detectSerial(){
         qDebug()<<"serial::";
         qDebug()<<iter->portName();
     }
+#if debugMode
     qDebug()<<"serial check end";
     qDebug()<<stringList.size();
+#endif
     return stringList;
 }
 
@@ -78,14 +79,36 @@ void MainWindow::openPort(QString portName){
 }
 
 void MainWindow::onReadyRead(){
+#if debugMode
     qDebug()<<"info come!";
+#endif
     QString str(serial->serial->readAll());
     ui->textBrowser->append(str);
 }
 
-void MainWindow::onGetIMU(QString data){
-    ui->textBrowser->append(data);
+void MainWindow::onGetIMU(QByteArray data){
+//    ui->textBrowser->append(data);
+    QString dataStr = QString(data);
+    imu.CopeSerialData(dataStr.toStdString(), 11);
+    unsigned char year = imu.stcTime.ucYear;
+    unsigned char mounth = imu.stcTime.ucDay;
+    short acc0 = imu.stcAcc.a[0];
+    short acc1 = imu.stcAcc.a[1];
+    short acc2 = imu.stcAcc.a[2];
+    ui->textBrowser->append("year:"+QString(year));
+    ui->textBrowser->append("mounth:"+QString(mounth));
+    ui->textBrowser->append(("acc0"+QString(acc0)));
+    ui->textBrowser->append(("acc1"+QString(acc1)));
+    ui->textBrowser->append(("acc2"+QString(acc2)));
+    qDebug()<<"=============this is the data debug===========";
+    qDebug()<<year;
+    qDebug()<<mounth;
+    qDebug()<<acc0;
+    qDebug()<<acc1;
+    qDebug()<<acc2;
+#if debugMode
     qDebug()<<"get imu!";
+#endif
 }
 
 void MainWindow::readData(){

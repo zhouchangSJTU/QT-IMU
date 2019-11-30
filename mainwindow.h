@@ -37,6 +37,6 @@ public slots:
     void on_recieve_clicked();
     void on_stopButton_clicked();
     void onReadyRead();
-    void onGetIMU(QString data);
+    void onGetIMU(QByteArray data);
 };
 #endif // MAINWINDOW_H

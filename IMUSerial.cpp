@@ -1,4 +1,5 @@
 #include"IMUSerial.h"
+#define DebugMode 0
 
 IMUSerial::IMUSerial(){
     serial = new QSerialPort(this);
@@ -43,7 +44,6 @@ void IMUSerial::openPort(QString portName){
         return;
     }
     serial->setBaudRate(QSerialPort::Baud9600,QSerialPort::AllDirections);
-//    serial->setParity(QSerialPort::Parity())
     qDebug()<<"success";
     qDebug()<<"serial state is :";
     qDebug()<<serial->isOpen();
@@ -57,23 +57,25 @@ void IMUSerial::readData(){
             return;
         }
     }
-    QByteArray array = serial->read(1000);
-    QString dataStr(array);
-    emit send(dataStr);
-    qDebug()<<"IMU Serial readData success!";
+    if(serial->waitForReadyRead(10)){
+        QByteArray array;
+        array = serial->read(256);
+        qDebug()<<"qByteArray!============";
+        qDebug()<<array;
+        emit send(array);
+    }
 }
 
 void IMUSerial::run(){
-        QByteArray array = serial->read(1000);
+        QByteArray array = serial->read(1024);
         QString dataStr(array);
-        emit send(dataStr);
+//        emit send(dataStr);
 }
 
 void IMUSerial::onReicieve(){
-    timer->start(500);
+    timer->start(1000);
 }
 
 void IMUSerial::onStop(){
     timer->stop();
-    qDebug()<<"is stop!";
 }

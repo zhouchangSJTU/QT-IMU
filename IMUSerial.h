@@ -21,7 +21,7 @@ public:
 private:
 
 signals:
-    void send(QString data);
+    void send(QByteArray data);
     void readyRead();
 
 public slots:
