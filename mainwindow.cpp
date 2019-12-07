@@ -91,21 +91,29 @@ void MainWindow::onGetIMU(QByteArray data){
     QString dataStr = QString(data);
     imu.CopeSerialData(dataStr.toStdString(), 11);
     unsigned char year = imu.stcTime.ucYear;
-    unsigned char mounth = imu.stcTime.ucDay;
+    unsigned char mounth = imu.stcTime.ucMonth;
     short acc0 = imu.stcAcc.a[0];
     short acc1 = imu.stcAcc.a[1];
     short acc2 = imu.stcAcc.a[2];
+    auto T = imu.stcAcc.T;
+    auto angle0 = imu.stcAngle.Angle[0];
+    auto angle1 = imu.stcAngle.Angle[1];
+    auto angle2 = imu.stcAngle.Angle[2];
     ui->textBrowser->append("year:"+QString(year));
     ui->textBrowser->append("mounth:"+QString(mounth));
     ui->textBrowser->append(("acc0"+QString(acc0)));
     ui->textBrowser->append(("acc1"+QString(acc1)));
     ui->textBrowser->append(("acc2"+QString(acc2)));
-    qDebug()<<"=============this is the data debug===========";
-    qDebug()<<year;
-    qDebug()<<mounth;
-    qDebug()<<acc0;
-    qDebug()<<acc1;
-    qDebug()<<acc2;
+//    qDebug()<<"=============this is the data debug===========";
+//    qDebug()<<year;
+//    qDebug()<<mounth;
+//    qDebug()<<acc0;
+//    qDebug()<<acc1;
+//    qDebug()<<acc2;
+//    qDebug()<<T;
+//    qDebug()<<angle0;
+//    qDebug()<<angle1;
+//    qDebug()<<angle2;
 #if debugMode
     qDebug()<<"get imu!";
 #endif

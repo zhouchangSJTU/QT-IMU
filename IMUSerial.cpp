@@ -61,7 +61,8 @@ void IMUSerial::readData(){
         QByteArray array;
         array = serial->read(256);
         qDebug()<<"qByteArray!============";
-        qDebug()<<array;
+//        array.toHex();
+        qDebug()<<array.toHex();
         emit send(array);
     }
 }
