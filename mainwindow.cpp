@@ -88,6 +88,7 @@ void MainWindow::onReadyRead(){
 
 void MainWindow::onGetIMU(QByteArray data){
 //    ui->textBrowser->append(data);
+//    qDebug()<<data.toHex();
     QString dataStr = QString(data);
     imu.CopeSerialData(dataStr.toStdString(), 11);
     unsigned char year = imu.stcTime.ucYear;
@@ -104,16 +105,16 @@ void MainWindow::onGetIMU(QByteArray data){
     ui->textBrowser->append(("acc0"+QString(acc0)));
     ui->textBrowser->append(("acc1"+QString(acc1)));
     ui->textBrowser->append(("acc2"+QString(acc2)));
-//    qDebug()<<"=============this is the data debug===========";
-//    qDebug()<<year;
-//    qDebug()<<mounth;
-//    qDebug()<<acc0;
-//    qDebug()<<acc1;
-//    qDebug()<<acc2;
-//    qDebug()<<T;
-//    qDebug()<<angle0;
-//    qDebug()<<angle1;
-//    qDebug()<<angle2;
+    qDebug()<<"=============this is the data debug===========";
+    qDebug()<<year;
+    qDebug()<<mounth;
+    qDebug()<<acc0;
+    qDebug()<<acc1;
+    qDebug()<<acc2;
+    qDebug()<<T;
+    qDebug()<<angle0;
+    qDebug()<<angle1;
+    qDebug()<<angle2;
 #if debugMode
     qDebug()<<"get imu!";
 #endif

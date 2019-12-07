@@ -103,18 +103,22 @@ void CJY901::CopeSerialData(std::string str_in, unsigned short usLength)
                 short temp1=(short)temp[1];
                 short temp2=(short)temp[3];
                 short temp3=(short)temp[5];
-                short ax = ((temp1<<8)|temp[0])/32768*16*9.8;
-                short ay = ((temp2<<8)|temp[2])/32768*16*9.8;
-                short az = ((temp3<<8)|temp[4])/32768*16*9.8;
+                qDebug()<<"---------";
+                qDebug()<<temp[5];
+                qDebug()<<temp[4];
+                qDebug()<<"---------";
+                short ax = ((temp1<<8)|temp[0])/32768.*16.;
+                short ay = ((temp2<<8)|temp[2])/32768.*16.;
+                short az = ((temp3<<8)|temp[4])/32768.*16.;
                 short tempreture = (((short)temp[7]<<8)|temp[6])/100;
                 stcAcc.a[0]=ax;
                 stcAcc.a[1]=ay;
                 stcAcc.a[2]=az;
                 stcAcc.T=tempreture;
                 qDebug()<<"---------";
-                for(int j=0;j<=7;j++){
-                qDebug("test:%x",temp[j]);
-                }
+//                for(int j=0;j<=7;j++){
+//                qDebug("test:%x",temp[j]);
+//                }
                 qDebug()<<ax;
                 qDebug()<<ay;
                 qDebug()<<az;
@@ -124,9 +128,9 @@ void CJY901::CopeSerialData(std::string str_in, unsigned short usLength)
             case 0x52:
             {
                 memmove(&temp,&chrTemp[2],8);
-                short wx = (((short)temp[1]<<8)|temp[0])/32768*2000;
-                short wy = (((short)temp[3]<<8)|temp[2])/32768*2000;
-                short wz = (((short)temp[5]<<8)|temp[4])/32768*2000;
+                short wx = (((short)temp[1]<<8)|temp[0])/32768.*2000.;
+                short wy = (((short)temp[3]<<8)|temp[2])/32768.*2000.;
+                short wz = (((short)temp[5]<<8)|temp[4])/32768.*2000.;
                 short tempreture = (((short)temp[7]<<8)|temp[6])/100;
                 stcGyro.w[0]=wx;
                 stcGyro.w[1]=wy;
@@ -137,9 +141,9 @@ void CJY901::CopeSerialData(std::string str_in, unsigned short usLength)
             case 0x53:
             {
                 memmove(&temp,&chrTemp[2],8);
-                short wx = (((short)temp[1]<<8)|temp[0])/32768*2000;
-                short wy = (((short)temp[3]<<8)|temp[2])/32768*2000;
-                short wz = (((short)temp[5]<<8)|temp[4])/32768*2000;
+                short wx = (((short)temp[1]<<8)|temp[0])/32768.*180;
+                short wy = (((short)temp[3]<<8)|temp[2])/32768.*180;
+                short wz = (((short)temp[5]<<8)|temp[4])/32768.*180;
                 short tempreture = (((short)temp[7]<<8)|temp[6])/100;
                 stcAngle.Angle[0]=wx;
                 stcAngle.Angle[1]=wy;

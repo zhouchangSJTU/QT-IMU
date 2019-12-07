@@ -23,8 +23,10 @@ SOURCES += \
     mainwindow.cpp
 
 HEADERS += \
+    CJY901.h \
     IMU.h \
     IMUSerial.h \
+    JY901_dfs.h \
     mainwindow.h
 
 FORMS += \

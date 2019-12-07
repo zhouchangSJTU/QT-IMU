@@ -57,24 +57,25 @@ void IMUSerial::readData(){
             return;
         }
     }
-    if(serial->waitForReadyRead(10)){
+    if(serial->waitForReadyRead(30)){
         QByteArray array;
-        array = serial->read(256);
+        array = serial->read(144);
+//        array = serial->readAll();
         qDebug()<<"qByteArray!============";
 //        array.toHex();
-        qDebug()<<array.toHex();
+//        qDebug()<<array.toHex();
         emit send(array);
     }
 }
 
 void IMUSerial::run(){
-        QByteArray array = serial->read(1024);
+        QByteArray array = serial->read(128);
         QString dataStr(array);
 //        emit send(dataStr);
 }
 
 void IMUSerial::onReicieve(){
-    timer->start(1000);
+    timer->start(200);
 }
 
 void IMUSerial::onStop(){
