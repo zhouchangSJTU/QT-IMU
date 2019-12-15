@@ -89,17 +89,19 @@ void MainWindow::onReadyRead(){
 void MainWindow::onGetIMU(QByteArray data){
 //    ui->textBrowser->append(data);
 //    qDebug()<<data.toHex();
-    QString dataStr = QString(data);
-    imu.CopeSerialData(dataStr.toStdString(), 11);
+//    QString dataStr = QString(data);
+//    imu.CopeSerialData(dataStr.toStdString(), 11);
+    std::string data_str = data.toStdString();
+    imu.CopeSerialData(data_str,11);
     unsigned char year = imu.stcTime.ucYear;
     unsigned char mounth = imu.stcTime.ucMonth;
-    short acc0 = imu.stcAcc.a[0];
-    short acc1 = imu.stcAcc.a[1];
-    short acc2 = imu.stcAcc.a[2];
+    short acc0 = imu.stcAcc.a[0]/32768.*16.*9.8;
+    short acc1 = imu.stcAcc.a[1]/32768.*16.*9.8;
+    short acc2 = imu.stcAcc.a[2]/32768.*16.*9.8;
     auto T = imu.stcAcc.T;
-    auto angle0 = imu.stcAngle.Angle[0];
-    auto angle1 = imu.stcAngle.Angle[1];
-    auto angle2 = imu.stcAngle.Angle[2];
+    auto angle0 = imu.stcAngle.Angle[0]/32768.*180.;
+    auto angle1 = imu.stcAngle.Angle[1]/32768.*180.;
+    auto angle2 = imu.stcAngle.Angle[2]/32768.*180.;
     ui->textBrowser->append("year:"+QString(year));
     ui->textBrowser->append("mounth:"+QString(mounth));
     ui->textBrowser->append(("acc0"+QString(acc0)));

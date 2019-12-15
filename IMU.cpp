@@ -88,93 +88,93 @@ void CJY901::CopeSerialData(std::string str_in, unsigned short usLength)
 //            }
             continue;
         }
-        unsigned char temp[8];
-        ////////////////////////////////////////////////////////////////////
-        switch(chrTemp[1])
-        {
-            case 0x50:	memmove(&stcTime,&chrTemp[2],8);
-            break;
-            case 0x51:
-            {
-                memmove(&temp,&chrTemp[2],8);
-//                for(int j=0;j<=7;j++){
-//                    temp[j]=chrTemp[j+1];
-//                }
-                short temp1=(short)temp[1];
-                short temp2=(short)temp[3];
-                short temp3=(short)temp[5];
-                qDebug()<<"---------";
-                qDebug()<<temp[5];
-                qDebug()<<temp[4];
-                qDebug()<<"---------";
-                short ax = ((temp1<<8)|temp[0])/32768.*16.;
-                short ay = ((temp2<<8)|temp[2])/32768.*16.;
-                short az = ((temp3<<8)|temp[4])/32768.*16.;
-                short tempreture = (((short)temp[7]<<8)|temp[6])/100;
-                stcAcc.a[0]=ax;
-                stcAcc.a[1]=ay;
-                stcAcc.a[2]=az;
-                stcAcc.T=tempreture;
-                qDebug()<<"---------";
-//                for(int j=0;j<=7;j++){
-//                qDebug("test:%x",temp[j]);
-//                }
-                qDebug()<<ax;
-                qDebug()<<ay;
-                qDebug()<<az;
-                qDebug()<<"---------";
-                break;
-            }
-            case 0x52:
-            {
-                memmove(&temp,&chrTemp[2],8);
-                short wx = (((short)temp[1]<<8)|temp[0])/32768.*2000.;
-                short wy = (((short)temp[3]<<8)|temp[2])/32768.*2000.;
-                short wz = (((short)temp[5]<<8)|temp[4])/32768.*2000.;
-                short tempreture = (((short)temp[7]<<8)|temp[6])/100;
-                stcGyro.w[0]=wx;
-                stcGyro.w[1]=wy;
-                stcGyro.w[2]=wz;
-                stcGyro.T=tempreture;
-                break;
-            }
-            case 0x53:
-            {
-                memmove(&temp,&chrTemp[2],8);
-                short wx = (((short)temp[1]<<8)|temp[0])/32768.*180;
-                short wy = (((short)temp[3]<<8)|temp[2])/32768.*180;
-                short wz = (((short)temp[5]<<8)|temp[4])/32768.*180;
-                short tempreture = (((short)temp[7]<<8)|temp[6])/100;
-                stcAngle.Angle[0]=wx;
-                stcAngle.Angle[1]=wy;
-                stcAngle.Angle[2]=wz;
-                stcAngle.T=tempreture;
-                break;
-            }
-            case 0x54:	memmove(&stcMag,&chrTemp[2],8);
-            break;
-            case 0x55:	memmove(&stcDStatus,&chrTemp[2],8);
-            break;
-            case 0x56:	memmove(&stcPress,&chrTemp[2],8);
-            break;
-            case 0x57:	memmove(&stcLonLat,&chrTemp[2],8);
-            break;
-            case 0x58:	memmove(&stcGPSV,&chrTemp[2],8);
-            break;
-        }
+//        unsigned char temp[8];
         ////////////////////////////////////////////////////////////////////
 //        switch(chrTemp[1])
 //        {
-//            case 0x50:	memmove(&stcTime,&chrTemp[2],8);break;
-//            case 0x51:	memmove(&stcAcc,&chrTemp[2],8);break;
-//            case 0x52:	memmove(&stcGyro,&chrTemp[2],8);break;
-//            case 0x53:	memmove(&stcAngle,&chrTemp[2],8);break;
-//            case 0x54:	memmove(&stcMag,&chrTemp[2],8);break;
-//            case 0x55:	memmove(&stcDStatus,&chrTemp[2],8);break;
-//            case 0x56:	memmove(&stcPress,&chrTemp[2],8);break;
-//            case 0x57:	memmove(&stcLonLat,&chrTemp[2],8);break;
-//            case 0x58:	memmove(&stcGPSV,&chrTemp[2],8);break;
+//            case 0x50:	memmove(&stcTime,&chrTemp[2],8);
+//            break;
+//            case 0x51:
+//            {
+//                memmove(&temp,&chrTemp[2],8);
+////                for(int j=0;j<=7;j++){
+////                    temp[j]=chrTemp[j+1];
+////                }
+//                short temp1=(short)temp[1];
+//                short temp2=(short)temp[3];
+//                short temp3=(short)temp[5];
+//                qDebug()<<"---------";
+//                qDebug()<<temp[5];
+//                qDebug()<<temp[4];
+//                qDebug()<<"---------";
+//                short ax = ((temp1<<8)|temp[0])/32768.*16.;
+//                short ay = ((temp2<<8)|temp[2])/32768.*16.;
+//                short az = ((temp3<<8)|temp[4])/32768.*16.;
+//                short tempreture = (((short)temp[7]<<8)|temp[6])/100;
+//                stcAcc.a[0]=ax;
+//                stcAcc.a[1]=ay;
+//                stcAcc.a[2]=az;
+//                stcAcc.T=tempreture;
+//                qDebug()<<"---------";
+////                for(int j=0;j<=7;j++){
+////                qDebug("test:%x",temp[j]);
+////                }
+//                qDebug()<<ax;
+//                qDebug()<<ay;
+//                qDebug()<<az;
+//                qDebug()<<"---------";
+//                break;
+//            }
+//            case 0x52:
+//            {
+//                memmove(&temp,&chrTemp[2],8);
+//                short wx = (((short)temp[1]<<8)|temp[0])/32768.*2000.;
+//                short wy = (((short)temp[3]<<8)|temp[2])/32768.*2000.;
+//                short wz = (((short)temp[5]<<8)|temp[4])/32768.*2000.;
+//                short tempreture = (((short)temp[7]<<8)|temp[6])/100;
+//                stcGyro.w[0]=wx;
+//                stcGyro.w[1]=wy;
+//                stcGyro.w[2]=wz;
+//                stcGyro.T=tempreture;
+//                break;
+//            }
+//            case 0x53:
+//            {
+//                memmove(&temp,&chrTemp[2],8);
+//                short wx = (((short)temp[1]<<8)|temp[0])/32768.*180;
+//                short wy = (((short)temp[3]<<8)|temp[2])/32768.*180;
+//                short wz = (((short)temp[5]<<8)|temp[4])/32768.*180;
+//                short tempreture = (((short)temp[7]<<8)|temp[6])/100;
+//                stcAngle.Angle[0]=wx;
+//                stcAngle.Angle[1]=wy;
+//                stcAngle.Angle[2]=wz;
+//                stcAngle.T=tempreture;
+//                break;
+//            }
+//            case 0x54:	memmove(&stcMag,&chrTemp[2],8);
+//            break;
+//            case 0x55:	memmove(&stcDStatus,&chrTemp[2],8);
+//            break;
+//            case 0x56:	memmove(&stcPress,&chrTemp[2],8);
+//            break;
+//            case 0x57:	memmove(&stcLonLat,&chrTemp[2],8);
+//            break;
+//            case 0x58:	memmove(&stcGPSV,&chrTemp[2],8);
+//            break;
 //        }
+        ////////////////////////////////////////////////////////////////////
+        switch(chrTemp[1])
+        {
+            case 0x50:	memmove(&stcTime,&chrTemp[2],8);break;
+            case 0x51:	memmove(&stcAcc,&chrTemp[2],8);break;
+            case 0x52:	memmove(&stcGyro,&chrTemp[2],8);break;
+            case 0x53:	memmove(&stcAngle,&chrTemp[2],8);break;
+            case 0x54:	memmove(&stcMag,&chrTemp[2],8);break;
+            case 0x55:	memmove(&stcDStatus,&chrTemp[2],8);break;
+            case 0x56:	memmove(&stcPress,&chrTemp[2],8);break;
+            case 0x57:	memmove(&stcLonLat,&chrTemp[2],8);break;
+            case 0x58:	memmove(&stcGPSV,&chrTemp[2],8);break;
+        }
         usRxLength -= 11;
         memmove(&chrTemp[0],&chrTemp[11],usRxLength);
 //        for(int j=0;j<usRxLength;j++){
